@@ -1,0 +1,9 @@
+
+{"level":"error","message":"Cannot read properties of null (reading 'productos')"}
+{"level":"error","message":"Callback must be a function, got true"}
+{"level":"error","message":"Cast to ObjectId failed for value \"Calculadora\" (type string) at path \"_id\" for model \"productos\""}
+{"level":"error","message":"Cannot read properties of undefined (reading 'push')"}
+{"address":"::","code":"EADDRINUSE","errno":-4091,"level":"error","port":8080,"syscall":"listen"}
+{"level":"error","message":"Cast to ObjectId failed for value \"637da4c1863af32b\" (type string) at path \"_id\" for model \"productos\""}
+{"level":"error","message":"this[#dao].deleteAll is not a function"}
+{"level":"error","message":"carrito is not defined"}

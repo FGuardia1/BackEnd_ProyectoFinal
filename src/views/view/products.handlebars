@@ -1,0 +1,83 @@
+<div>
+{{>navbar}}
+  <h1>Productos</h1>
+
+  <div
+    class="card-group mx-auto text-decoration-none d-flex flex-wrap justify-content-center"
+    id="products-container"
+  >
+    {{#each products}}
+
+      <div class="card ms-3" style="width:200px;" id={{this.id}}>
+        <img
+          class="card-img-top img-fluid"
+          src={{this.foto}}
+          alt="Card image cap"
+          style="width: 150px;"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{this.nombre}}</h5>
+          <p class="h4">${{this.precio}}</p>
+        </div>
+        <button
+          type="button"
+          class="btn btn-primary articulo__boton-compra"
+        >Agregar al carrito</button>
+      </div>
+
+    {{/each}}
+  </div>
+
+  <h1>Carrito</h1>
+
+  <table class="table table-dark">
+    <thead>
+      <tr>
+        <th scope="col">Foto</th>
+        <th scope="col">Producto</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Cantidad</th>
+      </tr>
+    </thead>
+    <tbody id="tablaCarrito">
+      {{#each listaCarrito}}
+
+     <tr>  
+  <td><img
+  class="card-img-top img-fluid"
+  src={{this.foto}}
+  alt="Card image cap"
+  style="width: 70px;"
+/></td>
+  <td>{{this.nombre}}</td>
+  <td>${{this.precio}}</td>
+  <td>{{this.cantidad}}</td>
+</tr> 
+
+    {{/each}}
+    </tbody>
+  </table>
+
+  <button
+    id="botonPedido"
+    type="button"
+    class="btn btn-primary"
+  >Hacer pedido</button>
+  <button id="botonVaciarCarrito" type="button" class="btn btn-primary">Vaciar
+    Carrito</button>
+
+  <div class="container-fluid">
+    <h2>Centro de mensajes</h2>
+<p>Su email es:<strong id="emailUser" class="blockquote"> {{email}}</strong></p>
+    <form
+      onsubmit="return addMessage(this)"
+      class="d-flex flex-column align-items-start"
+    >
+      <input type="text" id="chatMensaje" placeholder="Cuéntamos algo..." />
+      <input type="submit" value="Enviar" />
+    </form>
+    <div id="messages"></div>
+  </div>
+
+
+</div>

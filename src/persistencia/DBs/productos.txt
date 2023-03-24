@@ -1,0 +1,35 @@
+[
+  {
+    "nombre": "Escuadra",
+    "timestamp": "2/11/2022 17:25:44",
+    "descripcion": "Escuadra marca maped",
+    "codigo": "P1",
+    "precio": 123.45,
+    "stock": 20,
+    "foto": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
+    "categoria": "Escuadra",
+    "id": "637d420ee43be434d96fefc6"
+  },
+  {
+    "nombre": "Calculadora",
+    "timestamp": "1/11/2022 17:25:44",
+    "descripcion": "Calculadora marca Casio",
+    "codigo": "P2",
+    "precio": 235,
+    "stock": 25,
+    "foto": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png",
+    "categoria": "Calculadora",
+    "id": "637da7e6d705f35d7130f938"
+  },
+  {
+    "nombre": "Mochila",
+    "timestamp": "1/11/2022 17:25:44",
+    "descripcion": "Mochila marca adidas",
+    "codigo": "P3",
+    "precio": 3500,
+    "stock": 15,
+    "foto": "https://cdn3.iconfinder.com/data/icons/education-209/64/bag-pack-container-school-512.png",
+    "categoria": "Mochila",
+    "id": "637daaeb4097d4c1863af32b"
+  }
+]

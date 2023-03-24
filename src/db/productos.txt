@@ -1,0 +1,22 @@
+[
+  {
+    "nombre": "Escuadra",
+    "timestamp": "2/11/2022 17:25:44",
+    "descripcion": "Escuadra marca maped",
+    "codigo": "P1",
+    "precio": 123.45,
+    "stock": 20,
+    "foto": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
+    "id": 1
+  },
+  {
+    "nombre": "Calculadora",
+    "timestamp": "1/11/2022 17:25:44",
+    "descripcion": "Camculadora marca Casio",
+    "codigo": "P2",
+    "stock": 25,
+    "precio": 234.56,
+    "foto": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png",
+    "id": 2
+  }
+]
