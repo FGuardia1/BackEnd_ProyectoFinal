@@ -1,4 +1,4 @@
-import { twilioConfig } from "../../utils/configs/config.js";
+/* import { twilioConfig } from "../../utils/configs/config.js";
 import twilio from "twilio";
 
 const clientTwilio = twilio(twilioConfig.auth, twilioConfig.pass);
@@ -28,3 +28,4 @@ export const sendwsp = async ({ name, email }) => {
     console.log({ e });
   }
 };
+ */
