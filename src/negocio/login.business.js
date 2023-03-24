@@ -1,7 +1,7 @@
 import CartsRepo from "../persistencia/repos/CartsRepo.js";
 const cartsRepo = CartsRepo.getInstancia();
 import logger from "../../utils/logger.js";
-import { enviarMailRegistro } from "../services/sendEmail.js";
+//import { enviarMailRegistro } from "../services/sendEmail.js";
 import { proyectConfig } from "../../utils/configs/config.js";
 
 export const comprobarCarrito = async (userId) => {

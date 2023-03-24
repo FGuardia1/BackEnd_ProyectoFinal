@@ -1,7 +1,6 @@
 import CartsRepo from "../persistencia/repos/CartsRepo.js";
 const cartsRepo = CartsRepo.getInstancia();
 
-import { enviarMailRegistro } from "../services/sendEmail.js";
 import logger from "../../utils/logger.js";
 
 import {

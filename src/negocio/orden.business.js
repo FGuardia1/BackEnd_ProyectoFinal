@@ -3,8 +3,8 @@ const cartsRepo = CartsRepo.getInstancia();
 import OrdenesRepo from "../persistencia/repos/OrdenRepo.js";
 const ordenesRepo = OrdenesRepo.getInstancia();
 import { proyectConfig } from "../../utils/configs/config.js";
-import { enviarMailPedido } from "../services/sendEmail.js";
-import { sendmsj, sendwsp } from "../services/sendToPhone.js";
+//import { enviarMailPedido } from "../services/sendEmail.js";
+//import { sendmsj, sendwsp } from "../services/sendToPhone.js";
 import logger from "../../utils/logger.js";
 
 export const crearOrden = async ({ name, email, telephone }) => {
