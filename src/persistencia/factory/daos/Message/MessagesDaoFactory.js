@@ -8,20 +8,24 @@ const OPCION_DAO = proyectConfig.PERSISTENCIA;
 const rutaArchivoMsgs = "./src/persistencia/DBs/mensajes.txt";
 
 let dao;
-switch (OPCION_DAO) {
-  case "File":
-    dao = new MessagesDaoFile(rutaArchivoMsgs);
-    await dao.init();
-    break;
-  case "Mongo":
-    dao = new MessagesDaoMongo(Message);
-    await dao.init();
-    break;
-  default:
-    dao = new MessagesDaoFile(rutaArchivoMsgs);
-    await dao.init();
-    break;
+async function iniciarFactory() {
+  switch (OPCION_DAO) {
+    case "File":
+      dao = new MessagesDaoFile(rutaArchivoMsgs);
+      await dao.init();
+      break;
+    case "Mongo":
+      dao = new MessagesDaoMongo(Message);
+      await dao.init();
+      break;
+    default:
+      dao = new MessagesDaoFile(rutaArchivoMsgs);
+      await dao.init();
+      break;
+  }
 }
+
+iniciarFactory();
 export default class MessagesDaoFactory {
   static getDao() {
     return dao;

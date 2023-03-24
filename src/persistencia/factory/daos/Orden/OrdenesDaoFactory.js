@@ -6,19 +6,23 @@ import { proyectConfig } from "../../../../../utils/configs/config.js";
 const OPCION_DAO = proyectConfig.PERSISTENCIA;
 
 let dao;
-switch (OPCION_DAO) {
-  case "File":
-    dao = new OrdenesDaoFile(rutaArchivoOrdenes);
-    await dao.init();
-    break;
-  case "Mongo":
-    dao = new OrdenesDaoMongo(ordenes);
-    await dao.init();
-    break;
-  default:
-    dao = "new MsjsDaoFile(rutaArchivoProds);";
-    await dao.init();
+
+async function iniciarFactory() {
+  switch (OPCION_DAO) {
+    case "File":
+      dao = new OrdenesDaoFile(rutaArchivoOrdenes);
+      await dao.init();
+      break;
+    case "Mongo":
+      dao = new OrdenesDaoMongo(ordenes);
+      await dao.init();
+      break;
+    default:
+      dao = "new MsjsDaoFile(rutaArchivoProds);";
+      await dao.init();
+  }
 }
+iniciarFactory();
 export default class OrdenesDaoFactory {
   static getDao() {
     return dao;
