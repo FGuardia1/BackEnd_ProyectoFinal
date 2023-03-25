@@ -1,11 +1,3 @@
-import logger from "../../utils/logger.js";
-
-import ProductosRepo from "../persistencia/repos/ProductsRepo.js";
-const prodsRepo = ProductosRepo.getInstancia();
-
-import CartsRepo from "../persistencia/repos/CartsRepo.js";
-const cartsRepo = CartsRepo.getInstancia();
-
 import {
   obtenerListadoCarrito,
   buscarCarritoXuser,
@@ -24,7 +16,7 @@ const getListProducts = async (req, res) => {
 const getCartByUser = async (req, res) => {
   let email = req.user.email;
   let cart = await buscarCarritoXuser(email);
-
+  cart = cart[0];
   res.send({ id: cart.id });
 };
 

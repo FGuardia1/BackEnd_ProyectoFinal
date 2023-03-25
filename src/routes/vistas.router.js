@@ -1,9 +1,12 @@
 import express from "express";
 const routerViews = express.Router();
-import Authenticated from "../middlewars/index.js";
-import { renderHome } from "../controller/vistas.controller.js";
 
-routerViews.get("/home", Authenticated, renderHome);
+import { isValidAuthToken } from "../middlewars/index.js";
+
+import { renderHome } from "../controller/vistas.controller.js";
+import { proyectConfig } from "../../utils/configs/config.js";
+
+routerViews.get("/home", isValidAuthToken, renderHome);
 
 routerViews.get("/", (req, res, next) => {
   res.redirect("login");
@@ -22,6 +25,34 @@ routerViews.get("/failregister", (req, res) => {
 });
 routerViews.get("/faillogin", (req, res) => {
   res.render("login-error");
+});
+
+routerViews.get("/info", (req, res, next) => {
+  res.render("info-server", {
+    argumentos: process.argv,
+    nombrePlataforma: process.platform,
+    versionNode: process.version,
+    memoria: process.resourceUsage().maxRSS,
+    pathEjec: process.execPath,
+    IdProceso: process.pid,
+    carpetaProy: process.cwd(),
+  });
+});
+routerViews.get("/errorServer", (req, res, next) => {
+  let mensaje = decodeURIComponent(req.query.error);
+  console.log("hola error");
+  res.render("server-error", {
+    error: mensaje,
+  });
+});
+
+routerViews.get("/infoEntorno", (req, res, next) => {
+  res.render("info-entorno", {
+    port: proyectConfig.PORT,
+    persistencia: proyectConfig.PERSISTENCIA,
+    serviceExt: proyectConfig.SERVICE_EXT,
+    modo: proyectConfig.MODO,
+  });
 });
 
 export default routerViews;

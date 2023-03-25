@@ -1,9 +1,3 @@
-import logger from "../../utils/logger.js";
-
-import ProductosRepo from "../persistencia/repos/ProductsRepo.js";
-
-const prodsRepo = ProductosRepo.getInstancia();
-
 import {
   obtenerProductos,
   agregarProducto,

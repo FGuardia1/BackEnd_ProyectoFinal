@@ -18,7 +18,7 @@ async function iniciarFactory() {
       await dao.init();
       break;
     default:
-      dao = "new MsjsDaoFile(rutaArchivoProds);";
+      dao = new CartsDaoFile(rutaArchivoCarts);
       await dao.init();
   }
 }

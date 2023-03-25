@@ -52,6 +52,7 @@
   <td>{{this.nombre}}</td>
   <td>${{this.precio}}</td>
   <td>{{this.cantidad}}</td>
+  <td data-id="{{this.id}}"><strong>X</strong></td>
 </tr> 
 
     {{/each}}
@@ -79,5 +80,6 @@
     <div id="messages"></div>
   </div>
 
-
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="/main.js"></script>
 </div>

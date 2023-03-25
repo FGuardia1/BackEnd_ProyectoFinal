@@ -24,6 +24,7 @@ const login = (req, username, password, cb) => {
       logger.info("Invalid Password");
       return cb(null, false);
     }
+
     return cb(null, user);
   });
 };

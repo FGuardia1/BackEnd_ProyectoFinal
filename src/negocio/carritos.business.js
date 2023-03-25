@@ -57,9 +57,17 @@ export const agregarProdAcarrito = async (idCart, idProd) => {
     let carrito = await cartsRepo.getById(idCart);
     let producto = await prodsRepo.getById(idProd);
     let { nombre, precio, foto } = producto;
-    let id = producto._id || producto.id;
+    let id = producto.id;
     let cantidad = 1;
-    carrito.items.push({ id, nombre, precio, cantidad, foto });
+    //verifico si el producto esta en carrito
+    let indexBusq = carrito.items.findIndex((p) => p.id == producto.id);
+    if (indexBusq == -1) {
+      carrito.items.push({ id, nombre, precio, cantidad, foto });
+    } else {
+      let cantAnt = carrito.items[indexBusq].cantidad;
+      carrito.items[indexBusq].cantidad = Number(cantAnt) + 1;
+    }
+
     cartsRepo.modify(idCart, carrito);
     return carrito.items;
   } catch (error) {

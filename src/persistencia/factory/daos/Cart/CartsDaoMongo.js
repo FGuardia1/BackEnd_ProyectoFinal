@@ -27,14 +27,17 @@ export default class CartsDaoMongo {
   }
 
   async getBySearch(filter) {
-    return await this.collection.findOne(filter).lean();
+    let res = await this.collection.find(filter).lean();
+
+    return res;
   }
   async getAll() {
     return await this.collection.find().lean();
   }
 
   async modify(id, data) {
-    await this.collection.update({ _id: id }, { $set: data });
+    let result = await this.collection.updateMany({ _id: id }, { $set: data });
+    return data;
   }
 
   async delete(id) {

@@ -23,8 +23,8 @@ export default class CartsRepo {
   }
 
   async getBySearch(filter) {
-    const dto = await this.#dao.getBySearch(filter);
-    if (dto) return new Cart(dto);
+    const carts = await this.#dao.getBySearch(filter);
+    if (carts) return carts.map((m) => new Cart(m));
     else return null;
   }
 
@@ -42,6 +42,7 @@ export default class CartsRepo {
 
   async modify(idParaReemplazar, newProduct) {
     let updprod = await this.#dao.modify(idParaReemplazar, newProduct);
+    return new Cart(updprod);
   }
 
   static getInstancia = () => {

@@ -33,6 +33,7 @@ const proyectConfig = {
   PORT: env.PORT,
   PERSISTENCIA: env.PERSISTENCIA,
   SERVICE_EXT: env.SERVICE_EXT,
+  MODO: env.MODO,
 };
 
 export { emailConfig, twilioConfig, proyectConfig };

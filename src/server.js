@@ -5,15 +5,14 @@ import routerLogin from "./routes/loginLogout.router.js";
 import routerViews from "./routes/vistas.router.js";
 import routerOrden from "./routes/orden.router.js";
 import cookieParser from "cookie-parser";
-import session from "express-session";
-import MongoStore from "connect-mongo";
+
 import mongoose from "mongoose";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import * as strategy from "./passport/strategy.js";
 import path from "path";
-import { User } from "../utils/models/user.js";
-import { proyectConfig, twilioConfig } from "../utils/configs/config.js";
+
+import { proyectConfig } from "../utils/configs/config.js";
 import logger from "../utils/logger.js";
 import { cpus } from "os";
 import cluster from "cluster";
@@ -50,24 +49,8 @@ app.engine(
 );
 
 app.use(cookieParser());
-app.use(
-  session({
-    store: MongoStore.create({
-      mongoUrl: proyectConfig.URL_MONGO_ATLAS,
-      ttl: 600,
-    }),
-    secret: "sh",
-    resave: false,
-    saveUninitialized: false,
-    rolling: false,
-    cookie: {
-      maxAge: 600000,
-    },
-  })
-);
 
 app.use(passport.initialize());
-app.use(passport.session());
 passport.use(
   "login",
   new LocalStrategy({ passReqToCallback: true }, strategy.login)
@@ -77,16 +60,6 @@ passport.use(
   "register",
   new LocalStrategy({ passReqToCallback: true }, strategy.register)
 );
-
-passport.serializeUser((user, done) => {
-  done(null, user._id || user.id);
-});
-
-passport.deserializeUser((id, done) => {
-  User.findById(id, function (err, user) {
-    done(err, user);
-  });
-});
 
 app.use("/api/productos", routerProduct);
 app.use("/api/carrito", routerCart);

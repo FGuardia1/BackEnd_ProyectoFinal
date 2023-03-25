@@ -21,14 +21,20 @@ routerLogInOut.get("/logout", logOut);
 
 routerLogInOut.post(
   "/",
-  passport.authenticate("login", { failureRedirect: "/faillogin" }),
+  passport.authenticate("login", {
+    failureRedirect: "/faillogin",
+    session: false,
+  }),
   login
 );
 
 routerLogInOut.post(
   "/register",
   upload.single("myFile"),
-  passport.authenticate("register", { failureRedirect: "/failregister" }),
+  passport.authenticate("register", {
+    failureRedirect: "/failregister",
+    session: false,
+  }),
   register
 );
 

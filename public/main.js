@@ -91,7 +91,7 @@ function actualicarCarrito(carrito) {
   });
 }
 
-function obtenerHtmlfilaTabla({ foto, nombre, precio, cantidad }) {
+function obtenerHtmlfilaTabla({ foto, nombre, precio, cantidad, id }) {
   return `      
   <td><img
   class="card-img-top img-fluid"
@@ -102,6 +102,7 @@ function obtenerHtmlfilaTabla({ foto, nombre, precio, cantidad }) {
   <td>${nombre}</td>
   <td>$${precio}</td>
   <td>${cantidad}</td>
+  <td data-id="${id}"><strong>X</strong></td>
 `;
 }
 
