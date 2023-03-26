@@ -5,7 +5,7 @@ import routerLogin from "./routes/loginLogout.router.js";
 import routerViews from "./routes/vistas.router.js";
 import routerOrden from "./routes/orden.router.js";
 import cookieParser from "cookie-parser";
-import cors from "cors";
+import * as helmet from "helmet";
 import mongoose from "mongoose";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
@@ -32,9 +32,10 @@ const PORT = proyectConfig.PORT || 3000;
 const dirname = `${process.cwd()}`;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app;
 app.use(express.static(path.join(dirname, "public")));
-app.use(cors());
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+
 app.set("view engine", "handlebars");
 
 app.set("views", path.join(dirname, "src/views/view"));
