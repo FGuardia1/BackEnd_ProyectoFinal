@@ -4,8 +4,6 @@ const msgsRepo = MessagesRepo.getInstancia();
 
 export const chatService = (io) => {
   io.on("connection", (socket) => {
-    console.log("Nuevo usuario de chat conectado");
-
     //Al recibir un mensaje recojemos los datos
     socket.on("new-message", (message) => {
       //Lo enviamos a todos los usuarios (clientes)
