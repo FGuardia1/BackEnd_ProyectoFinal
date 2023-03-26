@@ -5,7 +5,7 @@ import routerLogin from "./routes/loginLogout.router.js";
 import routerViews from "./routes/vistas.router.js";
 import routerOrden from "./routes/orden.router.js";
 import cookieParser from "cookie-parser";
-
+import * as helmet from "helmet";
 import mongoose from "mongoose";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
@@ -34,6 +34,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app;
 app.use(express.static(path.join(dirname, "public")));
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 
 app.set("view engine", "handlebars");
 
