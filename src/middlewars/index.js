@@ -1,6 +1,6 @@
 import { JWT_UTILS } from "../../utils/jwt-utils.js";
 import { User } from "../../utils/models/user.js";
-
+import { proyectConfig } from "../../utils/configs/config.js";
 const isValidAuthToken = async (req, res, next) => {
   try {
     const { tokenCookie } = req.cookies;
@@ -9,7 +9,10 @@ const isValidAuthToken = async (req, res, next) => {
       throw new Error("Unauthorized");
     }
 
-    const verifiedToken = JWT_UTILS.verifyToken(tokenCookie, "secret");
+    const verifiedToken = JWT_UTILS.verifyToken(
+      tokenCookie,
+      proyectConfig.TOKEN_SECRET_WORD
+    );
 
     if (!verifiedToken) {
       throw new Error("Unauthorized");

@@ -51,8 +51,8 @@ export default class CartsDaoFile {
     await this.#leerArchivo();
     let campo = Object.keys(filter)[0];
     let valor = Object.values(filter)[0];
-    let find = this.carts.find((prod) => prod[campo] == valor);
-    return find;
+    let finds = this.carts.filter((prod) => prod[campo] == valor);
+    return finds;
   }
 
   async create(newCart) {

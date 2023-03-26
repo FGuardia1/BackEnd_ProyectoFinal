@@ -6,16 +6,86 @@ let carritoTabla = document.getElementById("tablaCarrito");
 let botonPedido = document.getElementById("botonPedido");
 let botonVaciarCarrito = document.getElementById("botonVaciarCarrito");
 let dropdownMenu = document.getElementsByClassName("dropdown-menu");
+
 seccionMuestrarioProd.addEventListener("click", agregarProducto);
 botonVaciarCarrito.addEventListener("click", vaciarCarrito);
 botonPedido.addEventListener("click", crearPedido);
-dropdownMenu[0].addEventListener("click", seleccionarCategoria);
+dropdownMenu[0].addEventListener("click", filtrarCategoria);
+carritoTabla.addEventListener("click", quitarDeCarrito);
 
-function seleccionarCategoria(e) {
+async function quitarDeCarrito(e) {
+  e.preventDefault();
+
+  if (e.target.classList.contains("quitar-producto")) {
+    let idProd = e.target.getAttribute("data-id");
+
+    let idCart = await fetch("/api/carrito/", {
+      headers: { "Content-Type": "application/json" },
+      method: "GET",
+    });
+
+    idCart = await idCart.json();
+
+    let cartUpdated = await fetch(
+      "/api/carrito/" + idCart.id + "/productos/" + idProd,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "DELETE",
+      }
+    );
+    cartUpdated = await cartUpdated.json();
+
+    actualicarCarrito(cartUpdated);
+  }
+}
+
+async function filtrarCategoria(e) {
   e.preventDefault();
   if (e.target.classList.contains("dropdown-item")) {
-    console.log("seleccion es" + e.target.text);
+    let category = e.target.text;
+
+    let res = await fetch("/api/productos/c/" + category, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET",
+    });
+
+    res = await res.json();
+
+    actualicarListadoProd(res);
   }
+}
+
+function actualicarListadoProd(prods) {
+  seccionMuestrarioProd.innerHTML = "";
+
+  prods.forEach((element) => {
+    const newDiv = document.createElement("div");
+    newDiv.innerHTML = obtenerHtmlProd(element);
+    seccionMuestrarioProd.appendChild(newDiv);
+  });
+}
+
+function obtenerHtmlProd({ foto, nombre, precio, id }) {
+  return `      
+  <div class="card " style="width: 150px;"id=${id}>
+        <img
+          class="card-img-top img-fluid"
+          src=${foto}
+          alt="Card image cap"
+          style="width: 140px;"
+        />
+        <div class="card-body">
+          <h5 class="card-title">${nombre}</h5>
+          <p class="h4">${precio}</p>
+        </div>
+        <button
+          type="button"
+          class="btn btn-primary articulo__boton-compra"
+        >Agregar al carrito</button>
+      </div>
+`;
 }
 
 function crearPedido() {
@@ -102,7 +172,7 @@ function obtenerHtmlfilaTabla({ foto, nombre, precio, cantidad, id }) {
   <td>${nombre}</td>
   <td>$${precio}</td>
   <td>${cantidad}</td>
-  <td data-id="${id}"><strong>X</strong></td>
+  <td ><strong class="quitar-producto" data-id="${id}">X</strong></td>
 `;
 }
 

@@ -3,8 +3,8 @@ const cartsRepo = CartsRepo.getInstancia();
 import OrdenesRepo from "../persistencia/repos/OrdenRepo.js";
 const ordenesRepo = OrdenesRepo.getInstancia();
 import { proyectConfig } from "../../utils/configs/config.js";
-//import { enviarMailPedido } from "../services/sendEmail.js";
-//import { sendmsj, sendwsp } from "../services/sendToPhone.js";
+import { enviarMailPedido } from "../services/sendEmail.js";
+import { sendmsj, sendwsp } from "../services/sendToPhone.js";
 import logger from "../../utils/logger.js";
 
 export const crearOrden = async ({ name, email, telephone }) => {
@@ -27,9 +27,9 @@ export const crearOrden = async ({ name, email, telephone }) => {
     cartsRepo.modify(cart.id, cart);
     ordenesRepo.create(newOrden);
     if (proyectConfig.SERVICE_EXT == "YES") {
-      // enviarMailPedido({ name, email, lista: cart.items });
-      //  sendmsj(telephone);
-      // sendwsp({ name, email });
+      enviarMailPedido({ name, email, lista: cart.items });
+      sendmsj(telephone);
+      sendwsp({ name, email });
     }
   } catch (error) {
     logger.error(error.message);

@@ -4,6 +4,8 @@ import {
   comprobarCarrito,
   crearCarritoRegistro,
 } from "../negocio/login.business.js";
+import { proyectConfig } from "../../utils/configs/config.js";
+
 const logOut = (req, res) => {
   try {
     res.clearCookie("tokenCookie");
@@ -14,12 +16,18 @@ const logOut = (req, res) => {
 };
 
 const login = async (req, res) => {
-  let email = req.user.email;
+  let { email, address } = req.user;
+  let cantMin = Number(proyectConfig.TIME_SESSION);
 
-  comprobarCarrito(email);
+  comprobarCarrito(email, address);
   const { user } = req;
-  const token = JWT_UTILS.createToken(user.toJSON(), "secret");
-  res.cookie("tokenCookie", token, { maxAge: 1000 * 60 });
+  const token = JWT_UTILS.createToken(
+    user.toJSON(),
+    proyectConfig.TOKEN_SECRET_WORD
+  );
+  res.cookie("tokenCookie", token, {
+    maxAge: 1000 * 60 * cantMin,
+  });
   res.redirect("/home");
 };
 

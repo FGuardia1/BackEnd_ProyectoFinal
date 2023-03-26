@@ -1,4 +1,4 @@
-/* import { createTransport } from "nodemailer";
+import { createTransport } from "nodemailer";
 import { emailConfig } from "../../utils/configs/config.js";
 
 const transporter = createTransport({
@@ -37,7 +37,7 @@ const enviarMailPedido = async ({ name, email, lista }) => {
     (element) =>
       (strlista =
         strlista +
-        `<li>${element.nombre}, codigo ${element.codigo}, precio $${element.precio}</li>`)
+        `<li>${element.nombre}, codigo ${element.codigo}, precio $${element.precio},cantidad:${element.cantidad}</li>`)
   );
 
   strlista = "<ul>" + strlista + "</ul>";
@@ -57,4 +57,3 @@ const enviarMailPedido = async ({ name, email, lista }) => {
 };
 
 export { enviarMailPedido, enviarMailRegistro };
- */

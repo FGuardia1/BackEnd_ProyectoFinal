@@ -15,7 +15,9 @@ const getListProducts = async (req, res) => {
 
 const getCartByUser = async (req, res) => {
   let email = req.user.email;
+
   let cart = await buscarCarritoXuser(email);
+
   cart = cart[0];
   res.send({ id: cart.id });
 };
@@ -46,8 +48,8 @@ const addProdToCart = async (req, res) => {
 const removeProduct = async (req, res) => {
   const idCart = req.params.id;
   const idProd = req.params.id_prod;
-  quitarProdCarrito(idCart, idProd);
-  res.status(200).send("Producto eliminado de carrito");
+  let modCart = await quitarProdCarrito(idCart, idProd);
+  res.status(200).send(modCart.items);
 };
 
 const clearCart = async (req, res) => {

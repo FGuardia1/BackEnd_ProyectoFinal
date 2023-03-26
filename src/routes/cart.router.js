@@ -1,5 +1,6 @@
 import express from "express";
 const routerCart = express.Router();
+import { isValidAuthToken } from "../middlewars/index.js";
 import {
   getListProducts,
   addProdToCart,
@@ -12,7 +13,7 @@ import {
 
 routerCart.get("/:id/productos", getListProducts);
 
-routerCart.get("/", getCartByUser);
+routerCart.get("/", isValidAuthToken, getCartByUser);
 
 routerCart.delete("/:id", deleteCart);
 

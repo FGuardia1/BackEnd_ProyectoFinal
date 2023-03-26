@@ -3,17 +3,17 @@
   <h1>Productos</h1>
 
   <div
-    class="card-group mx-auto text-decoration-none d-flex flex-wrap justify-content-center"
+    class="card-deck"
     id="products-container"
   >
     {{#each products}}
 
-      <div class="card ms-3" style="width:200px;" id={{this.id}}>
+      <div class="card " style="width: 150px;"id={{this.id}}>
         <img
           class="card-img-top img-fluid"
           src={{this.foto}}
           alt="Card image cap"
-          style="width: 150px;"
+          style="width: 140px;"
         />
         <div class="card-body">
           <h5 class="card-title">{{this.nombre}}</h5>
@@ -52,7 +52,7 @@
   <td>{{this.nombre}}</td>
   <td>${{this.precio}}</td>
   <td>{{this.cantidad}}</td>
-  <td data-id="{{this.id}}"><strong>X</strong></td>
+  <td ><strong class="quitar-producto" data-id="{{this.id}}">X</strong></td>
 </tr> 
 
     {{/each}}

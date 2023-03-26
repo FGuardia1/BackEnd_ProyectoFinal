@@ -34,6 +34,8 @@ const proyectConfig = {
   PERSISTENCIA: env.PERSISTENCIA,
   SERVICE_EXT: env.SERVICE_EXT,
   MODO: env.MODO,
+  TIME_SESSION: env.TIME_SESSION,
+  TOKEN_SECRET_WORD: env.TOKEN_SECRET_WORD,
 };
 
 export { emailConfig, twilioConfig, proyectConfig };

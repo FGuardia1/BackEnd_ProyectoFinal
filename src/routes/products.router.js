@@ -9,8 +9,9 @@ import {
   getCategory,
 } from "../controller/product.controller.js";
 
-routerProduct.get("/:id?", getProducts);
 routerProduct.get("/c/:categoria", getCategory);
+routerProduct.get("/:id?", getProducts);
+
 routerProduct.post("/", addProduct);
 
 routerProduct.put("/:id", updateProduct);

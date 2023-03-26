@@ -78,8 +78,11 @@ export const agregarProdAcarrito = async (idCart, idProd) => {
 export const quitarProdCarrito = async (idCart, idProd) => {
   try {
     let carrito = await cartsRepo.getById(idCart);
-    carrito.productos = carrito.productos.filter((el) => el.id != idProd);
+
+    carrito.items = carrito.items.filter((el) => el.id != idProd);
+
     cartsRepo.modify(idCart, carrito);
+    return carrito;
   } catch (error) {
     logger.error(error.message);
   }
