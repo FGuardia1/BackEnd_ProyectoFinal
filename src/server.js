@@ -4,6 +4,7 @@ import routerCart from "./routes/cart.router.js";
 import routerLogin from "./routes/loginLogout.router.js";
 import routerViews from "./routes/vistas.router.js";
 import routerOrden from "./routes/orden.router.js";
+import routerChat from "./routes/chat.router.js";
 import cookieParser from "cookie-parser";
 import * as helmet from "helmet";
 import mongoose from "mongoose";
@@ -64,6 +65,7 @@ passport.use(
 
 app.use("/api/productos", routerProduct);
 app.use("/api/carrito", routerCart);
+app.use("/api/chat", routerChat);
 app.use("/login", routerLogin);
 app.use("/api/pedido", routerOrden);
 app.use("/", routerViews);

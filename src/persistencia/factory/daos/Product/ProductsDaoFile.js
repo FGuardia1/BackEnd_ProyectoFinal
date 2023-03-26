@@ -48,7 +48,7 @@ export default class ProductsDaoFile {
     await this.#leerArchivo();
     let campo = Object.keys(filter)[0];
     let valor = Object.values(filter)[0];
-    let find = this.productos.find((prod) => prod[campo] == valor);
+    let find = this.productos.filter((prod) => prod[campo] == valor);
     return find;
   }
 

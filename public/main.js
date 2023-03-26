@@ -185,6 +185,15 @@ const addMessage = (e) => {
   };
 
   socket.emit("new-message", message);
+
+  fetch("/api/chat/", {
+    body: JSON.stringify(message),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+  });
+
   return false;
 };
 

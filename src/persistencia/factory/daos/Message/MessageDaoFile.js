@@ -48,7 +48,7 @@ export default class MessagesDaoFile {
     await this.#leerArchivo();
     let campo = Object.keys(filter)[0];
     let valor = Object.values(filter)[0];
-    let find = this.mensajes.find((prod) => prod[campo] == valor);
+    let find = this.mensajes.filter((prod) => prod[campo] == valor);
     return find;
   }
 

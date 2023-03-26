@@ -5,3 +5,5 @@
 {"level":"error","message":"Cannot read properties of undefined (reading 'items')"}
 {"level":"error","message":"Cannot read properties of undefined (reading 'items')"}
 {"level":"error","message":"Cannot read properties of undefined (reading 'items')"}
+{"level":"error","message":"Cannot read properties of undefined (reading 'map')"}
+{"level":"error","message":"messages.map is not a function"}

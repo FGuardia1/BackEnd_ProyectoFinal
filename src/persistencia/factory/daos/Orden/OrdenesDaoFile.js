@@ -51,7 +51,7 @@ export default class OrdenesDaoFile {
     await this.#leerArchivo();
     let campo = Object.keys(filter)[0];
     let valor = Object.values(filter)[0];
-    let find = this.orden.find((prod) => prod[campo] == valor);
+    let find = this.orden.filter((prod) => prod[campo] == valor);
     return find;
   }
 
