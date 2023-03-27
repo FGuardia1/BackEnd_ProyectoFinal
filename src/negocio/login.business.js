@@ -33,7 +33,6 @@ export const crearCarritoRegistro = async (userEmail, address, datosEmail) => {
     });
 
     if (proyectConfig.SERVICE_EXT == "YES") {
-      console.log("se envio email registro");
       enviarMailRegistro(datosEmail);
     }
   } catch (error) {

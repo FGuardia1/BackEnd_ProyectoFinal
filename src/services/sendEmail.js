@@ -37,7 +37,7 @@ const enviarMailPedido = async ({ name, email, lista }) => {
     (element) =>
       (strlista =
         strlista +
-        `<li>${element.nombre}, codigo ${element.codigo}, precio $${element.precio},cantidad:${element.cantidad}</li>`)
+        `<li>${element.nombre}, id: ${element.id}, precio: $${element.precio},cantidad:${element.cantidad}</li>`)
   );
 
   strlista = "<ul>" + strlista + "</ul>";

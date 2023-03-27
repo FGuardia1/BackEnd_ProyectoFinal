@@ -83,13 +83,10 @@ if (MODO == "CLUSTER") {
     httpServer.listen(PORT, async () => {
       logger.info(`Servidor corriendo en puerto: ${PORT}`);
       try {
-        await mongoose.connect(
-          proyectConfig.URL_MONGO_ATLAS + "&dbName=ecommerceBackend",
-          {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-          }
-        );
+        await mongoose.connect(proyectConfig.URL_MONGO_ATLAS, {
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+        });
         logger.info("DB mongo conectada");
       } catch (error) {
         logger.error(`Error en conexión de Base de datos: ${error}`);
@@ -101,13 +98,10 @@ if (MODO == "CLUSTER") {
   httpServer.listen(PORT, async () => {
     logger.info(`Servidor corriendo en puerto: ${PORT}`);
     try {
-      await mongoose.connect(
-        proyectConfig.URL_MONGO_ATLAS + "&dbName=ecommerceBackend",
-        {
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
-        }
-      );
+      await mongoose.connect(proyectConfig.URL_MONGO_ATLAS, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      });
       logger.info("DB mongo conectada");
     } catch (error) {
       logger.error(`Error en conexión de Base de datos: ${error}`);
