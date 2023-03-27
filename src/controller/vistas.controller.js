@@ -9,7 +9,6 @@ export const renderHome = async (req, res) => {
 
   try {
     const products = await prodsRepo.getAll();
-
     let cart = await cartsRepo.getBySearch({
       email,
     });
@@ -25,5 +24,7 @@ export const renderHome = async (req, res) => {
     });
   } catch (error) {
     logger.error(error.message);
+    let errorMsg = encodeURIComponent(error.message);
+    res.redirect("/errorServer/?error=" + errorMsg);
   }
 };

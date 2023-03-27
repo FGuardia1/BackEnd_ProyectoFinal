@@ -13,29 +13,35 @@ botonPedido.addEventListener("click", crearPedido);
 dropdownMenu[0].addEventListener("click", filtrarCategoria);
 carritoTabla.addEventListener("click", quitarDeCarrito);
 
+async function obtener_idCarrito() {
+  let resp = await fetch("/api/carrito/", {
+    headers: { "Content-Type": "application/json" },
+    method: "GET",
+  });
+
+  comprobarRespuesta(resp);
+
+  let cart = await resp.json();
+  return cart.id;
+}
+
 async function quitarDeCarrito(e) {
   e.preventDefault();
 
   if (e.target.classList.contains("quitar-producto")) {
     let idProd = e.target.getAttribute("data-id");
 
-    let idCart = await fetch("/api/carrito/", {
-      headers: { "Content-Type": "application/json" },
-      method: "GET",
+    let idCart = await obtener_idCarrito();
+
+    let resp = await fetch("/api/carrito/" + idCart + "/productos/" + idProd, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "DELETE",
     });
 
-    idCart = await idCart.json();
-
-    let cartUpdated = await fetch(
-      "/api/carrito/" + idCart.id + "/productos/" + idProd,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "DELETE",
-      }
-    );
-    cartUpdated = await cartUpdated.json();
+    comprobarRespuesta(resp);
+    let cartUpdated = await resp.json();
 
     actualicarCarrito(cartUpdated);
   }
@@ -46,14 +52,15 @@ async function filtrarCategoria(e) {
   if (e.target.classList.contains("dropdown-item")) {
     let category = e.target.text;
 
-    let res = await fetch("/api/productos/c/" + category, {
+    let resp = await fetch("/api/productos/c/" + category, {
       headers: { "Content-Type": "application/json" },
       method: "GET",
     });
+    comprobarRespuesta(resp);
 
-    res = await res.json();
+    let listadoFilt = await resp.json();
 
-    actualicarListadoProd(res);
+    actualicarListadoProd(listadoFilt);
   }
 }
 
@@ -88,38 +95,48 @@ function obtenerHtmlProd({ foto, nombre, precio, id }) {
 `;
 }
 
-function crearPedido() {
-  fetch("/api/pedido/new", {
+async function crearPedido() {
+  let resp = await fetch("/api/pedido/new", {
     headers: {
       "Content-Type": "application/json",
     },
     method: "POST",
   });
 
+  comprobarRespuesta(resp);
+
   carritoTabla.innerHTML = "";
 }
 
-function cerrarSesion() {
-  fetch("/login/logout", {
+async function cerrarSesion() {
+  let resp = await fetch("/login/logout", {
     headers: { "Content-Type": "application/json" },
     method: "GET",
   });
+  comprobarRespuesta(resp);
 }
 
 async function vaciarCarrito() {
-  let cart = await fetch("/api/carrito/", {
+  let resp = await fetch("/api/carrito/", {
     headers: { "Content-Type": "application/json" },
     method: "GET",
   });
+  comprobarRespuesta(resp);
+  let cart = await resp.json();
 
-  cart = await cart.json();
-
-  let response = await fetch("/api/carrito/" + cart.id + "/productos", {
+  resp = await fetch("/api/carrito/" + cart.id + "/productos", {
     headers: { "Content-Type": "application/json" },
     method: "DELETE",
   });
-
+  comprobarRespuesta(resp);
   carritoTabla.innerHTML = "";
+}
+
+async function comprobarRespuesta(resp) {
+  if (resp.status == 500) {
+    let error = await resp.json();
+    location.replace("/errorServer/?error=" + error.error);
+  }
 }
 
 async function agregarProducto(e) {
@@ -131,21 +148,18 @@ async function agregarProducto(e) {
     //obtengo el id del producto, es el numero del id
     let idProd = productoSeleccionado.getAttribute("id");
 
-    let idCart = await fetch("/api/carrito/", {
-      headers: { "Content-Type": "application/json" },
-      method: "GET",
-    });
+    let cartId = await obtener_idCarrito();
 
-    idCart = await idCart.json();
-
-    let cartUpdated = await fetch("/api/carrito/" + idCart.id + "/productos", {
+    let resp = await fetch("/api/carrito/" + cartId + "/productos", {
       body: JSON.stringify({ idProd: idProd }),
       headers: {
         "Content-Type": "application/json",
       },
       method: "POST",
     });
-    cartUpdated = await cartUpdated.json();
+
+    comprobarRespuesta(resp);
+    let cartUpdated = await resp.json();
 
     actualicarCarrito(cartUpdated);
   }
@@ -176,7 +190,7 @@ function obtenerHtmlfilaTabla({ foto, nombre, precio, cantidad, id }) {
 `;
 }
 
-const addMessage = (e) => {
+const addMessage = async (e) => {
   const message = {
     email: chatEmail,
     tipo: "usuario",
@@ -186,14 +200,14 @@ const addMessage = (e) => {
 
   socket.emit("new-message", message);
 
-  fetch("/api/chat/", {
+  let resp = await fetch("/api/chat/", {
     body: JSON.stringify(message),
     headers: {
       "Content-Type": "application/json",
     },
     method: "POST",
   });
-
+  comprobarRespuesta(resp);
   return false;
 };
 

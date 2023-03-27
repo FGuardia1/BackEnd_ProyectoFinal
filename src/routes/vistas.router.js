@@ -40,7 +40,6 @@ routerViews.get("/info", (req, res, next) => {
 });
 routerViews.get("/errorServer", (req, res, next) => {
   let mensaje = decodeURIComponent(req.query.error);
-  console.log("hola error");
   res.render("server-error", {
     error: mensaje,
   });

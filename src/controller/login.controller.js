@@ -12,33 +12,42 @@ const logOut = (req, res) => {
     res.render("logout");
   } catch (error) {
     logger.error(error.message);
+    let errorMsg = encodeURIComponent(error.message);
+    res.status(500).send({ error: errorMsg });
   }
 };
 
 const login = async (req, res) => {
-  let { email, address } = req.user;
-  let cantMin = Number(proyectConfig.TIME_SESSION);
-
-  comprobarCarrito(email, address);
-  const { user } = req;
-  const token = JWT_UTILS.createToken(
-    user.toJSON(),
-    proyectConfig.TOKEN_SECRET_WORD
-  );
-  res.cookie("tokenCookie", token, {
-    maxAge: 1000 * 60 * cantMin,
-  });
-  res.redirect("/home");
+  try {
+    let { email, address } = req.user;
+    let cantMin = Number(proyectConfig.TIME_SESSION);
+    comprobarCarrito(email, address);
+    const { user } = req;
+    const token = JWT_UTILS.createToken(
+      user.toJSON(),
+      proyectConfig.TOKEN_SECRET_WORD
+    );
+    res.cookie("tokenCookie", token, {
+      maxAge: 1000 * 60 * cantMin,
+    });
+    res.redirect("/home");
+  } catch (error) {
+    let errorMsg = encodeURIComponent(error.message);
+    res.redirect("/errorServer/?error=" + errorMsg);
+  }
 };
 
 const register = async (req, res) => {
-  let emailUser = req.user.email;
-  let address = req.user.address;
-  let datosEmail = req.body;
-
-  crearCarritoRegistro(emailUser, address, datosEmail);
-
-  res.redirect("/login");
+  try {
+    let emailUser = req.user.email;
+    let address = req.user.address;
+    let datosEmail = req.body;
+    crearCarritoRegistro(emailUser, address, datosEmail);
+    res.redirect("/login");
+  } catch (error) {
+    let errorMsg = encodeURIComponent(error.message);
+    res.redirect("/errorServer/?error=" + errorMsg);
+  }
 };
 
 export { register, login, logOut };
