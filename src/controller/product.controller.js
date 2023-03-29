@@ -21,9 +21,10 @@ const getProducts = async (req, res) => {
 const getCategory = async (req, res) => {
   try {
     res.send(await obtenerXcategorias(req.params.categoria));
-  } catch (error) {}
-  let errorMsg = encodeURIComponent(error.message);
-  res.status(500).send({ error: errorMsg });
+  } catch (error) {
+    let errorMsg = encodeURIComponent(error.message);
+    res.status(500).send({ error: errorMsg });
+  }
 };
 
 const addProduct = async (req, res) => {
