@@ -1,5 +1,3 @@
-const socket = io.connect();
-let chatEmail = document.getElementById("emailUser").innerText;
 let seccionMuestrarioProd = document.getElementById("products-container");
 let btnCerrarSesion = document.getElementById("btn_cerrar_sesion");
 let carritoTabla = document.getElementById("tablaCarrito");
@@ -189,37 +187,3 @@ function obtenerHtmlfilaTabla({ foto, nombre, precio, cantidad, id }) {
   <td ><strong class="quitar-producto" data-id="${id}">X</strong></td>
 `;
 }
-
-const addMessage = async (e) => {
-  const message = {
-    email: chatEmail,
-    tipo: "usuario",
-    date: new Date().toLocaleString(),
-    mensaje: document.querySelector("#chatMensaje").value,
-  };
-
-  socket.emit("new-message", message);
-
-  let resp = await fetch("/api/chat/", {
-    body: JSON.stringify(message),
-    headers: {
-      "Content-Type": "application/json",
-    },
-    method: "POST",
-  });
-  comprobarRespuesta(resp);
-  return false;
-};
-
-socket.on("message-push", (data) => {
-  renderMessageAdd(data);
-});
-
-const renderMessageAdd = ({ email, mensaje, date }) => {
-  const html = `
-  <strong class="text-primary">${email}</strong><span style="color:brown">[${date}]</span>:
-  <i style="color:green">${mensaje}</i>`;
-  const div = document.createElement("div");
-  div.innerHTML = html;
-  document.querySelector("#messages").append(div);
-};

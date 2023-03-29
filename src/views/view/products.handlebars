@@ -67,19 +67,5 @@
   <button id="botonVaciarCarrito" type="button" class="btn btn-primary">Vaciar
     Carrito</button>
 
-  <div class="container-fluid">
-    <h2>Centro de mensajes</h2>
-<p>Su email es:<strong id="emailUser" class="blockquote">{{email}}</strong></p>
-    <form
-      onsubmit="return addMessage(this)"
-      class="d-flex flex-column align-items-start"
-    >
-      <input type="text" id="chatMensaje" placeholder="Cuéntamos algo..." />
-      <input type="submit" value="Enviar" />
-    </form>
-    <div id="messages"></div>
-  </div>
-
-    <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="/main.js"></script>
 </div>

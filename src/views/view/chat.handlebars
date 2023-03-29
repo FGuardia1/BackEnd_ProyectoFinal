@@ -1,0 +1,63 @@
+<div>
+  <div class="container-fluid">
+
+    <h2>Centro de mensajes</h2>
+
+    <p>Su email es:<strong
+        id="emailUser"
+        class="blockquote"
+      >{{email}}</strong></p>
+    <div class="d-flex flex-row">
+      <div class="p-3">
+
+        {{#if admin}}
+
+          <form
+            onsubmit=" RespondTo();return false"
+            class="d-flex flex-column align-items-start"
+          >
+            <input
+              type="text"
+              id="emailRespond"
+              placeholder="Responder a email..."
+            />
+            <textarea
+              rows="3"
+              cols="50"
+              id="chatResponse"
+              placeholder="Su respuesta"
+            ></textarea>
+            <input type="submit" value="Enviar" />
+          </form>
+
+        {{else}}
+          <form
+            onsubmit="addMessage();return false"
+            class="d-flex flex-column align-items-start"
+          >
+            <textarea
+              rows="3"
+              cols="50"
+              id="chatMensaje"
+              placeholder="Alguna consulta?"
+            ></textarea>
+
+            <input type="submit" value="Enviar" />
+          </form>
+
+        {{/if}}
+
+      </div>
+
+      <div id="messages"></div>
+
+    </div>
+
+    <button class="btn btn-success my-3" onclick="location.href ='/home'">A
+      inicio</button>
+
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="text/javascript" src="/chatJs.js"></script>
+</div>

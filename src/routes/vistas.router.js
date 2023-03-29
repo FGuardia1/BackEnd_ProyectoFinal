@@ -8,6 +8,11 @@ import { proyectConfig } from "../../utils/configs/config.js";
 
 routerViews.get("/home", isValidAuthToken, renderHome);
 
+routerViews.get("/chat", isValidAuthToken, (req, res, next) => {
+  let admin = true;
+  res.render("chat", { email: req.user.email, admin });
+});
+
 routerViews.get("/", (req, res, next) => {
   res.redirect("login");
 });

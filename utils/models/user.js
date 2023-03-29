@@ -8,6 +8,7 @@ const userSchema = mongoose.Schema({
   age: Number,
   telephone: String,
   avatar_path: String,
+  rol: String,
 });
 
 export const User = mongoose.model("User", userSchema);

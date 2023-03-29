@@ -59,7 +59,6 @@ const addProdToCart = async (req, res) => {
     let { idProd } = req.body;
     let newList = await agregarProdAcarrito(idCart, idProd);
 
-    //  throw new Error("error al cargar producto al carrito");
     res.status(200).send(newList);
   } catch (error) {
     let errorMsg = encodeURIComponent(error.message);

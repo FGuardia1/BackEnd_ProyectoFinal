@@ -47,7 +47,8 @@ const register = (req, username, password, cb) => {
       return cb(null, false);
     } else {
       let path_avatar = path.join(dirname, "public", "avatar", file.filename);
-      const { name, address, age, telephone } = req.body;
+      const { name, address, age, telephone, typeUser } = req.body;
+
       const newUser = new User();
       newUser.email = username;
       newUser.password = createHash(password);
@@ -56,6 +57,7 @@ const register = (req, username, password, cb) => {
       newUser.age = age;
       newUser.telephone = telephone;
       newUser.avatar_path = path_avatar;
+      newUser.rol = typeUser;
       newUser
         .save()
         .then((datos) => cb(null, datos))

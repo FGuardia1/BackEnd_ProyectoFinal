@@ -12,6 +12,14 @@
     >
 
       <div class="form-group">
+
+        <label for="register_gender" class="label">Elija tipo Usuario:(si podra
+          o no responder al chat como sistema o hacer consulta)</label>
+        <input type="radio" name="typeUser" checked="true" value="user" />
+        <label for="register_userType">user</label>
+        <input type="radio" name="typeUser" value="admin" />
+        <label for="register_modType">admin</label>
+
         <input
           id="username"
           name="username"
@@ -71,8 +79,8 @@
           type="text"
           required
         />
-
-        <input type="file" name="myFile" required />
+        <label for="myFile">Elija su foto de perfil</label>
+        <input type="file" name="myFile" required /><br />
       </div>
 
       <div class="form-group">
