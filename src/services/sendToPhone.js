@@ -9,11 +9,8 @@ export const sendmsj = async (telephone) => {
     from: twilioConfig.cel,
     to: telephone,
   };
-  try {
-    const msj = await clientTwilio.messages.create(msjData);
-  } catch (e) {
-    console.log({ e });
-  }
+
+  const msj = await clientTwilio.messages.create(msjData);
 };
 
 export const sendwsp = async ({ name, email }) => {
@@ -22,9 +19,6 @@ export const sendwsp = async ({ name, email }) => {
     from: "whatsapp:" + twilioConfig.celwsp,
     to: "whatsapp:" + twilioConfig.celAdmin,
   };
-  try {
-    const msj = await clientTwilio.messages.create(msjData);
-  } catch (e) {
-    console.log({ e });
-  }
+
+  const msj = await clientTwilio.messages.create(msjData);
 };

@@ -5,15 +5,15 @@ const ordenesRepo = OrdenesRepo.getInstancia();
 import { proyectConfig } from "../../utils/configs/config.js";
 import { enviarMailPedido } from "../services/sendEmail.js";
 import { sendmsj, sendwsp } from "../services/sendToPhone.js";
-import logger from "../../utils/logger.js";
 
 export const crearOrden = async ({ name, email, telephone }) => {
   let timestamp = new Date();
   let cart = await cartsRepo.getBySearch({
     email,
   });
-  let ordenes = await ordenesRepo.getAll();
   cart = cart[0];
+  let ordenes = await ordenesRepo.getAll();
+
   let newOrden = {
     items: cart.items,
     numeroOrden: ordenes.length,
@@ -22,13 +22,13 @@ export const crearOrden = async ({ name, email, telephone }) => {
     email,
   };
 
-  ordenesRepo.create(newOrden);
+  await ordenesRepo.create(newOrden);
 
   if (proyectConfig.SERVICE_EXT == "YES") {
-    enviarMailPedido({ name, email, lista: cart.items });
-    sendmsj(telephone);
-    sendwsp({ name, email });
+    await enviarMailPedido({ name, email, lista: cart.items });
+    await sendmsj(telephone);
+    await sendwsp({ name, email });
   }
   cart.items = [];
-  cartsRepo.modify(cart.id, cart);
+  await cartsRepo.modify(cart.id, cart);
 };

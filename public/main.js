@@ -11,31 +11,44 @@ botonPedido.addEventListener("click", crearPedido);
 dropdownMenu[0].addEventListener("click", filtrarCategoria);
 carritoTabla.addEventListener("click", quitarDeCarrito);
 
+async function comprobarRespuesta(resp) {
+  if (resp.status == 500) {
+    let error = await resp.json();
+    //redirecciono a mostrar el error enviandolo por query que fue encodeado como un uri, para ser decodeado y mostrado en pantalla
+    location.replace("/errorServer/?error=" + error.error);
+  }
+}
+
+//segun las consignas del tp las peticiones a carrito(agregar, quitar producto) se hacen enviando el id de carrito por url, por lo que hacer una peticion para obtenerlo
 async function obtener_idCarrito() {
   let resp = await fetch("/api/carrito/", {
     headers: { "Content-Type": "application/json" },
     method: "GET",
   });
-
+  //compruebo que no hubo error en la peticion
   comprobarRespuesta(resp);
 
   let cart = await resp.json();
   return cart.id;
 }
 
-async function quitarDeCarrito(e) {
+async function agregarProducto(e) {
   e.preventDefault();
 
-  if (e.target.classList.contains("quitar-producto")) {
-    let idProd = e.target.getAttribute("data-id");
+  if (e.target.classList.contains("articulo__boton-compra")) {
+    ///obtengo el producto que se muestra en la pagina
+    const productoSeleccionado = e.target.parentElement;
+    //obtengo el id del producto, es el numero del id
+    let idProd = productoSeleccionado.getAttribute("id");
 
-    let idCart = await obtener_idCarrito();
+    let cartId = await obtener_idCarrito();
 
-    let resp = await fetch("/api/carrito/" + idCart + "/productos/" + idProd, {
+    let resp = await fetch("/api/carrito/" + cartId + "/productos", {
+      body: JSON.stringify({ idProd: idProd }),
       headers: {
         "Content-Type": "application/json",
       },
-      method: "DELETE",
+      method: "POST",
     });
 
     comprobarRespuesta(resp);
@@ -45,6 +58,26 @@ async function quitarDeCarrito(e) {
   }
 }
 
+async function quitarDeCarrito(e) {
+  e.preventDefault();
+
+  if (e.target.classList.contains("quitar-producto")) {
+    let idProd = e.target.getAttribute("data-id");
+    let idCart = await obtener_idCarrito();
+    let resp = await fetch("/api/carrito/" + idCart + "/productos/" + idProd, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "DELETE",
+    });
+
+    comprobarRespuesta(resp);
+    let cartUpdated = await resp.json();
+    actualicarCarrito(cartUpdated);
+  }
+}
+
+//mediante el dropdown hago un filtro de productos por categoria
 async function filtrarCategoria(e) {
   e.preventDefault();
   if (e.target.classList.contains("dropdown-item")) {
@@ -64,7 +97,6 @@ async function filtrarCategoria(e) {
 
 function actualicarListadoProd(prods) {
   seccionMuestrarioProd.innerHTML = "";
-
   prods.forEach((element) => {
     const newDiv = document.createElement("div");
     newDiv.innerHTML = obtenerHtmlProd(element);
@@ -115,52 +147,14 @@ async function cerrarSesion() {
 }
 
 async function vaciarCarrito() {
-  let resp = await fetch("/api/carrito/", {
-    headers: { "Content-Type": "application/json" },
-    method: "GET",
-  });
-  comprobarRespuesta(resp);
-  let cart = await resp.json();
+  let cartId = await obtener_idCarrito();
 
-  resp = await fetch("/api/carrito/" + cart.id + "/productos", {
+  resp = await fetch("/api/carrito/" + cartId + "/productos", {
     headers: { "Content-Type": "application/json" },
     method: "DELETE",
   });
   comprobarRespuesta(resp);
   carritoTabla.innerHTML = "";
-}
-
-async function comprobarRespuesta(resp) {
-  if (resp.status == 500) {
-    let error = await resp.json();
-    location.replace("/errorServer/?error=" + error.error);
-  }
-}
-
-async function agregarProducto(e) {
-  e.preventDefault();
-
-  if (e.target.classList.contains("articulo__boton-compra")) {
-    ///obtengo el producto que se muestra en la pagina
-    const productoSeleccionado = e.target.parentElement;
-    //obtengo el id del producto, es el numero del id
-    let idProd = productoSeleccionado.getAttribute("id");
-
-    let cartId = await obtener_idCarrito();
-
-    let resp = await fetch("/api/carrito/" + cartId + "/productos", {
-      body: JSON.stringify({ idProd: idProd }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-    });
-
-    comprobarRespuesta(resp);
-    let cartUpdated = await resp.json();
-
-    actualicarCarrito(cartUpdated);
-  }
 }
 
 function actualicarCarrito(carrito) {

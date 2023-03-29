@@ -6,6 +6,8 @@ import {
   obtenerXcategorias,
 } from "../negocio/productos.business.js";
 
+import logger from "../../utils/logger.js";
+
 const getProducts = async (req, res) => {
   try {
     let resp = await obtenerProductos(req.params.id);
@@ -13,6 +15,7 @@ const getProducts = async (req, res) => {
     if (resp) res.status(200).send(resp);
     else res.status(502).send({ Mensaje: "No encontrado" });
   } catch (error) {
+    logger.error(error.message);
     let errorMsg = encodeURIComponent(error.message);
     res.status(500).send({ error: errorMsg });
   }
@@ -20,8 +23,10 @@ const getProducts = async (req, res) => {
 
 const getCategory = async (req, res) => {
   try {
-    res.send(await obtenerXcategorias(req.params.categoria));
+    let categoria = req.params.categoria;
+    res.send(await obtenerXcategorias(categoria));
   } catch (error) {
+    logger.error(error.message);
     let errorMsg = encodeURIComponent(error.message);
     res.status(500).send({ error: errorMsg });
   }
@@ -32,6 +37,7 @@ const addProduct = async (req, res) => {
     await agregarProducto(req.body);
     res.status(200).send("Producto agregado");
   } catch (error) {
+    logger.error(error.message);
     let errorMsg = encodeURIComponent(error.message);
     res.status(500).send({ error: errorMsg });
   }
@@ -45,6 +51,7 @@ const updateProduct = async (req, res) => {
     await modificarProducto(id, producto);
     res.status(200).send("Producto modificado");
   } catch (error) {
+    logger.error(error.message);
     let errorMsg = encodeURIComponent(error.message);
     res.status(500).send({ error: errorMsg });
   }
@@ -56,6 +63,7 @@ const deleteProduct = async (req, res) => {
     await eliminarProducto(id);
     res.status(200).send("Producto eliminado");
   } catch (error) {
+    logger.error(error.message);
     let errorMsg = encodeURIComponent(error.message);
     res.status(500).send({ error: errorMsg });
   }

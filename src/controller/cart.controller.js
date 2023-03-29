@@ -8,11 +8,14 @@ import {
   vaciarCarrito,
 } from "../negocio/carritos.business.js";
 
+import logger from "../../utils/logger.js";
+
 const getListProducts = async (req, res) => {
   try {
     let productos = await obtenerListadoCarrito(req.params.id);
     res.send(productos);
   } catch (error) {
+    logger.error(error.message);
     let errorMsg = encodeURIComponent(error.message);
     res.status(500).send({ error: errorMsg });
   }
@@ -23,20 +26,21 @@ const getCartByUser = async (req, res) => {
     let email = req.user.email;
     let cart = await buscarCarritoXuser(email);
 
-    cart = cart[0];
-    res.send({ id: cart.id });
+    res.status(200).send({ id: cart.id });
   } catch (error) {
+    logger.error(error.message);
     let errorMsg = encodeURIComponent(error.message);
     res.status(500).send({ error: errorMsg });
   }
 };
 
-const deleteCart = (req, res) => {
+const deleteCart = async (req, res) => {
   try {
     const id = req.params.id;
-    eliminarCarrito(id);
+    await eliminarCarrito(id);
     res.status(200).send("Carrito eliminado");
   } catch (error) {
+    logger.error(error.message);
     let errorMsg = encodeURIComponent(error.message);
     res.status(500).send({ error: errorMsg });
   }
@@ -48,6 +52,7 @@ const createCart = async (req, res) => {
     let newCartId = await crearCarrito(userEmail);
     res.send({ id: newCartId });
   } catch (error) {
+    logger.error(error.message);
     let errorMsg = encodeURIComponent(error.message);
     res.status(500).send({ error: errorMsg });
   }
@@ -73,6 +78,7 @@ const removeProduct = async (req, res) => {
     let modCart = await quitarProdCarrito(idCart, idProd);
     res.status(200).send(modCart.items);
   } catch (error) {
+    logger.error(error.message);
     let errorMsg = encodeURIComponent(error.message);
     res.status(500).send({ error: errorMsg });
   }
@@ -84,6 +90,7 @@ const clearCart = async (req, res) => {
     vaciarCarrito(idCart);
     res.status(200).send("Carrito vaciado");
   } catch (error) {
+    logger.error(error.message);
     let errorMsg = encodeURIComponent(error.message);
     res.send(500).send({ error: errorMsg });
   }

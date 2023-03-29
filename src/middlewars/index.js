@@ -1,6 +1,7 @@
 import { JWT_UTILS } from "../../utils/jwt-utils.js";
 import { User } from "../../utils/models/user.js";
 import { proyectConfig } from "../../utils/configs/config.js";
+
 const isValidAuthToken = async (req, res, next) => {
   try {
     const { tokenCookie } = req.cookies;

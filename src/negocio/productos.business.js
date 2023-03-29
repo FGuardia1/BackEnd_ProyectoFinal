@@ -1,16 +1,10 @@
-import logger from "../../utils/logger.js";
-
 import ProductosRepo from "../persistencia/repos/ProductsRepo.js";
 
 const prodsRepo = ProductosRepo.getInstancia();
 
 export const obtenerProductos = async (idProd) => {
-  try {
-    if (idProd) return await prodsRepo.getById(idProd);
-    else return await prodsRepo.getAll();
-  } catch (error) {
-    logger.error(error.message);
-  }
+  if (idProd) return await prodsRepo.getById(idProd);
+  else return await prodsRepo.getAll();
 };
 
 export const obtenerXcategorias = async (categoria) => {
@@ -28,33 +22,22 @@ export const agregarProducto = async ({
   precio = Number(precio);
 
   let timestamp = new Date().toLocaleString();
-  try {
-    prodsRepo.add({
-      nombre,
-      descripcion,
-      foto,
-      precio,
-      stock,
-      codigo,
-      timestamp,
-    });
-  } catch (error) {
-    logger.error(error.message);
-  }
+
+  prodsRepo.add({
+    nombre,
+    descripcion,
+    foto,
+    precio,
+    stock,
+    codigo,
+    timestamp,
+  });
 };
 
 export const modificarProducto = async (id, producto) => {
-  try {
-    await prodsRepo.modify(id, producto);
-  } catch (error) {
-    logger.error(error.message);
-  }
+  await prodsRepo.modify(id, producto);
 };
 
 export const eliminarProducto = async (id) => {
-  try {
-    await prodsRepo.removeById(id);
-  } catch (error) {
-    logger.error(error.message);
-  }
+  await prodsRepo.removeById(id);
 };

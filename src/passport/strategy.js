@@ -7,6 +7,8 @@ const dirname = `${process.cwd()}`;
 const validatePassword = (user, password) => {
   return bCrypt.compareSync(password, user.password);
 };
+
+//codifica la password antes de guardarla a la DB
 const createHash = function (password) {
   return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
 };
@@ -16,12 +18,12 @@ const login = (req, username, password, cb) => {
   User.findOne({ email: username }, (err, user) => {
     if (err) return cb(err);
     if (!user) {
-      logger.info("User Not Found with email " + username);
+      logger.info("Usuario no encontrado con email " + username);
 
       return cb(null, false);
     }
     if (!validatePassword(user, password)) {
-      logger.info("Invalid Password");
+      logger.info("contraseña invalida");
       return cb(null, false);
     }
 
@@ -32,6 +34,7 @@ const login = (req, username, password, cb) => {
 const register = (req, username, password, cb) => {
   const file = req.file;
   let passConf = req.body.passwordConf;
+  //verifico que la contraseña/verificacion sean iguales
   if (password != passConf) {
     return cb(null, false);
   }
@@ -39,11 +42,10 @@ const register = (req, username, password, cb) => {
   User.findOne({ email: username }, function (err, user) {
     if (err) {
       logger.info("Error in SignUp: " + err.message);
-
       return cb(err);
     }
     if (user) {
-      logger.info("User already exists");
+      logger.info("usuario existe");
       return cb(null, false);
     } else {
       let path_avatar = path.join(dirname, "public", "avatar", file.filename);

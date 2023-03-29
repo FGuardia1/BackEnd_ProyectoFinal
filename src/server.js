@@ -21,26 +21,27 @@ import { Server as HttpServer } from "http";
 import { Server as IOServer } from "socket.io";
 import { chatService } from "./chat_sockets/sockets.js";
 import exphbs from "express-handlebars";
+
 let cantCpus = cpus().length;
-
+//si el server se va a ejecutar como NODE O CLUSTER
 const MODO = proyectConfig.MODO;
-
+const PORT = proyectConfig.PORT || 3000;
+const dirname = `${process.cwd()}`;
 const app = express();
 const httpServer = new HttpServer(app);
 const socketIo = new IOServer(httpServer);
+
+//Asigno todas las el socket a las funcionalidades de mi chat
 chatService(socketIo);
-const PORT = proyectConfig.PORT || 3000;
-const dirname = `${process.cwd()}`;
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app;
 app.use(express.static(path.join(dirname, "public")));
+//para permitir leer url de imagenes de otro server
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 
 app.set("view engine", "handlebars");
-
 app.set("views", path.join(dirname, "src/views/view"));
-
 app.engine(
   "handlebars",
   exphbs.engine({
