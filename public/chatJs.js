@@ -48,6 +48,10 @@ const RespondTo = async (e) => {
   comprobarRespuesta(resp);
 };
 
+socket.on("messages", (data) => {
+  renderMessages(data);
+});
+
 socket.on("message-push", (data) => {
   renderMessageAdd(data);
 });
@@ -58,6 +62,27 @@ socket.on("response-push", (data) => {
     renderMessageAdd(data);
   }
 });
+
+const renderMessages = (data) => {
+  const html = data
+    .map((msg, index) => {
+      if (msg.tipo == "usuario") {
+        return `<div>
+          <strong class="text-primary">${msg.email}</strong><span style="color:brown">[${msg.date}]</span>:
+          <i style="color:green">${msg.mensaje}</i>
+			</div>`;
+      } else {
+        if (msg.email == userEmail) {
+          return `<div>
+                      <strong class="text-primary">sistema</strong><span style="color:brown">[${msg.date}]</span>:
+                      <i style="color:green">${msg.mensaje}</i>
+                  </div>`;
+        }
+      }
+    })
+    .join(" ");
+  document.querySelector("#messages").innerHTML = html;
+};
 
 const renderMessageAdd = ({ email, mensaje, date }) => {
   const html = `
