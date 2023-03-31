@@ -20,3 +20,5 @@
 {"level":"error","message":"Cannot destructure property 'nombre' of 'object null' as it is null."}
 {"level":"error","message":"Cannot destructure property 'nombre' of 'object null' as it is null."}
 {"level":"error","message":"Cannot destructure property 'nombre' of 'object null' as it is null."}
+{"level":"error","message":"Cast to ObjectId failed for value \"c\" (type string) at path \"_id\" for model \"productos\""}
+{"level":"error","message":"Cannot destructure property 'nombre' of 'undefined' as it is undefined."}
