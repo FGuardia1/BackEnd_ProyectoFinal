@@ -3,7 +3,7 @@ const prodsRepo = ProductosRepo.getInstancia();
 import CartsRepo from "../persistencia/repos/CartsRepo.js";
 const cartsRepo = CartsRepo.getInstancia();
 import logger from "../../utils/logger.js";
-
+import { obtenerCategoriasList } from "../negocio/vistas.business.js";
 export const renderHome = async (req, res) => {
   const { name, avatar_path, email } = req.user;
 
@@ -12,6 +12,8 @@ export const renderHome = async (req, res) => {
     let cart = await cartsRepo.getBySearch({
       email,
     });
+    let categoriasList = obtenerCategoriasList(products);
+
     cart = cart[0];
     let listaCarrito = cart.items;
 
@@ -21,6 +23,7 @@ export const renderHome = async (req, res) => {
       listaCarrito,
       avatar_path,
       email,
+      categoriasList,
     });
   } catch (error) {
     logger.error(error.message);

@@ -28,9 +28,10 @@
           Filtrar
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Mochila</a>
-          <a class="dropdown-item" href="#">Escuadra</a>
-          <a class="dropdown-item" href="#">Calculadora</a>
+          {{#each categoriasList}}
+            <a class="dropdown-item" href="#">{{this}}</a>
+          {{/each}}
+
         </div>
       </li>
       <li class="nav-item">

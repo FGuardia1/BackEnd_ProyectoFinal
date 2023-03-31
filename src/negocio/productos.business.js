@@ -11,27 +11,12 @@ export const obtenerXcategorias = async (categoria) => {
   return await prodsRepo.getBySearch({ categoria: categoria });
 };
 
-export const agregarProducto = async ({
-  nombre,
-  descripcion,
-  foto,
-  precio,
-  stock,
-  codigo,
-}) => {
-  precio = Number(precio);
+export const agregarProducto = async (newProd) => {
+  newProd.precio = Number(newProd.precio);
 
-  let timestamp = new Date().toLocaleString();
+  newProd.timestamp = new Date().toLocaleString();
 
-  prodsRepo.add({
-    nombre,
-    descripcion,
-    foto,
-    precio,
-    stock,
-    codigo,
-    timestamp,
-  });
+  prodsRepo.add(newProd);
 };
 
 export const modificarProducto = async (id, producto) => {
