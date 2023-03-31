@@ -35,12 +35,16 @@ export default class ProductsDaoMongo {
   }
 
   async modify(id, data) {
-    await this.collection.update({ _id: id }, { $set: data });
+    if (mongoose.Types.ObjectId.isValid(id)) {
+      let res = await this.collection.update({ _id: id }, { $set: data });
+      if (res.matchedCount == 0) return false;
+      else return true;
+    } else {
+      return null;
+    }
   }
 
-  async delete(id) {
-    await this.collection.deleteOne({ _id: id });
-  }
+  async delete(id) {}
   async deleteAll() {
     await this.collection.deleteMany({});
   }

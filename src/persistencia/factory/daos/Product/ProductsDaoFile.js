@@ -1,5 +1,6 @@
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
+import { asDto } from "../../dtos/ProductDTO.js";
 export default class ProductsDaoFile {
   constructor(ruta) {
     this.ruta = ruta;
@@ -36,12 +37,13 @@ export default class ProductsDaoFile {
 
   async getAll() {
     await this.#leerArchivo();
-    return this.productos;
+
+    return asDto(this.productos);
   }
 
   async getById(idBuscado) {
     await this.#leerArchivo();
-    return this.productos[this.#getIndex(idBuscado)];
+    return asDto(this.productos[this.#getIndex(idBuscado)]);
   }
 
   async getBySearch(filter) {
@@ -49,7 +51,7 @@ export default class ProductsDaoFile {
     let campo = Object.keys(filter)[0];
     let valor = Object.values(filter)[0];
     let find = this.productos.filter((prod) => prod[campo] == valor);
-    return find;
+    return asDto(find);
   }
 
   async create(newProd) {
@@ -57,27 +59,35 @@ export default class ProductsDaoFile {
     newProd.id = this.getRandomId();
     this.productos.push(newProd);
     await this.#escribirArchivo();
-    return newProd;
+    return true;
   }
 
   async delete(idParaBorrar) {
     await this.#leerArchivo();
-    const [borrada] = this.productos.splice(this.#getIndex(idParaBorrar), 1);
-    await this.#escribirArchivo();
-    return borrada;
+    let indice = this.#getIndex(idParaBorrar);
+    if (indice != -1) {
+      const [borrada] = this.productos.splice(indice, 1);
+      await this.#escribirArchivo();
+      return true;
+    } else return false;
   }
 
   async deleteAll() {
     this.productos = [];
     await this.#escribirArchivo();
+    return true;
   }
 
   async modify(idParaReemplazar, newProduct) {
     await this.#leerArchivo();
-    const index = this.#getIndex(idParaReemplazar);
-    const actualizada = { ...this.productos[index], ...newProduct };
-    this.productos.splice(index, 1, actualizada);
-    await this.#escribirArchivo();
-    return actualizada;
+    let index = this.#getIndex(idParaReemplazar);
+    if (index != -1) {
+      const actualizada = { ...this.productos[index], ...newProduct };
+      this.productos.splice(index, 1, actualizada);
+      await this.#escribirArchivo();
+      return true;
+    } else {
+      return false;
+    }
   }
 }

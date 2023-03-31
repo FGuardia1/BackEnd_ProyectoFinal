@@ -41,8 +41,8 @@ export default class CartsRepo {
   }
 
   async modify(idParaReemplazar, newProduct) {
-    let updprod = await this.#dao.modify(idParaReemplazar, newProduct);
-    return new Cart(updprod);
+    let resp = await this.#dao.modify(idParaReemplazar, newProduct);
+    return resp;
   }
 
   static getInstancia = () => {

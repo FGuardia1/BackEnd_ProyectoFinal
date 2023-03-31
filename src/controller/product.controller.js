@@ -34,8 +34,12 @@ const getCategory = async (req, res) => {
 
 const addProduct = async (req, res) => {
   try {
-    await agregarProducto(req.body);
-    res.status(200).send("Producto agregado");
+    let resp = await agregarProducto(req.body);
+    if (resp) {
+      res.status(200).send("Producto agregado");
+    } else {
+      res.status(402).send("No se pude crear el producto");
+    }
   } catch (error) {
     logger.error(error.message);
     let errorMsg = encodeURIComponent(error.message);
@@ -48,8 +52,12 @@ const updateProduct = async (req, res) => {
     const id = req.params.id;
     const producto = req.body;
 
-    await modificarProducto(id, producto);
-    res.status(200).send("Producto modificado");
+    let resp = await modificarProducto(id, producto);
+    if (resp) {
+      res.status(200).send("Producto modificado");
+    } else {
+      res.status(402).send("No se pudo modificar el producto");
+    }
   } catch (error) {
     logger.error(error.message);
     let errorMsg = encodeURIComponent(error.message);
@@ -60,8 +68,12 @@ const updateProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
   try {
     const id = req.params.id;
-    await eliminarProducto(id);
-    res.status(200).send("Producto eliminado");
+    let resp = await eliminarProducto(id);
+    if (resp) {
+      res.status(200).send("Producto eliminado");
+    } else {
+      res.status(402).send("No se pudo eliminar el producto");
+    }
   } catch (error) {
     logger.error(error.message);
     let errorMsg = encodeURIComponent(error.message);

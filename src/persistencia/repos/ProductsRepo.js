@@ -30,19 +30,18 @@ export default class ProductosRepo {
   }
 
   async add(prodNew) {
-    let agregado = await this.#dao.create(asDto(prodNew));
-    return new Producto(agregado);
+    return await this.#dao.create(asDto(prodNew));
   }
 
   async removeById(idBuscado) {
-    const removida = await this.#dao.delete(idBuscado);
+    return await this.#dao.delete(idBuscado);
   }
 
   async removeAll() {
-    await this.#dao.deleteAll();
+    return await this.#dao.deleteAll();
   }
   async modify(idParaReemplazar, newProduct) {
-    let updprod = await this.#dao.modify(idParaReemplazar, newProduct);
+    return await this.#dao.modify(idParaReemplazar, newProduct);
   }
 
   static getInstancia = () => {

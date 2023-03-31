@@ -115,7 +115,7 @@ function obtenerHtmlProd({ foto, nombre, precio, id }) {
         />
         <div class="card-body">
           <h5 class="card-title">${nombre}</h5>
-          <p class="h4">${precio}</p>
+          <p class="h4">$${precio}</p>
         </div>
         <button
           type="button"

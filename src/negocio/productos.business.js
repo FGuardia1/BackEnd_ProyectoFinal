@@ -16,13 +16,13 @@ export const agregarProducto = async (newProd) => {
 
   newProd.timestamp = new Date().toLocaleString();
 
-  prodsRepo.add(newProd);
+  return await prodsRepo.add(newProd);
 };
 
 export const modificarProducto = async (id, producto) => {
-  await prodsRepo.modify(id, producto);
+  return await prodsRepo.modify(id, producto);
 };
 
 export const eliminarProducto = async (id) => {
-  await prodsRepo.removeById(id);
+  return await prodsRepo.removeById(id);
 };

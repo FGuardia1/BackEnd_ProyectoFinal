@@ -31,5 +31,16 @@
     "foto": "https://cdn3.iconfinder.com/data/icons/education-209/64/bag-pack-container-school-512.png",
     "categoria": "Mochila",
     "id": "637daaeb4097d4c1863af32b"
+  },
+  {
+    "nombre": "Calculadora cientifica",
+    "timestamp": "30/3/2023 21:14:46",
+    "descripcion": "Calculadora cientifica marca school smart",
+    "codigo": "P4",
+    "precio": 1300,
+    "stock": 20,
+    "foto": "https://cdn1.iconfinder.com/data/icons/icons-for-a-site-1/64/advantage_calculator-512.png",
+    "categoria": "Calculadora",
+    "id": "642625f65d8dcf66fd1ed228"
   }
 ]

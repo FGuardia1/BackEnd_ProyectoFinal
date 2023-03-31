@@ -8,6 +8,8 @@ export class ProductDto {
     stock,
     foto,
     categoria,
+    id,
+    _id,
   }) {
     (this.nombre = nombre),
       (this.timestamp = timestamp),
@@ -17,6 +19,7 @@ export class ProductDto {
       (this.stock = stock),
       (this.foto = foto);
     this.categoria = categoria;
+    this.id = _id || id;
   }
 }
 export function asDto(prods) {
