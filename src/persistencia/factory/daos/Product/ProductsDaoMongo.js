@@ -21,9 +21,11 @@ export default class ProductsDaoMongo {
 
   async getById(id) {
     if (mongoose.Types.ObjectId.isValid(id)) {
-      return asDto(await this.collection.findOne({ _id: id }));
+      let res = await this.collection.findOne({ _id: id });
+      if (res) return asDto(res);
+      else false;
     } else {
-      return null;
+      return false;
     }
   }
 

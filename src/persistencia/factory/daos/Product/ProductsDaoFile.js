@@ -43,6 +43,7 @@ export default class ProductsDaoFile {
 
   async getById(idBuscado) {
     await this.#leerArchivo();
+
     return asDto(this.productos[this.#getIndex(idBuscado)]);
   }
 

@@ -13,3 +13,10 @@
 {"level":"error","message":"Cast to ObjectId failed for value \"637daaeffc1863af32b\" (type string) at path \"_id\" for model \"productos\""}
 {"level":"error","message":"resp is not defined"}
 {"level":"error","message":"Assignment to constant variable."}
+{"level":"error","message":"Cannot destructure property 'nombre' of 'object null' as it is null."}
+{"level":"error","message":"Cannot destructure property 'nombre' of 'object null' as it is null."}
+{"level":"error","message":"Cannot destructure property 'nombre' of 'object null' as it is null."}
+{"level":"error","message":"Cannot destructure property 'nombre' of 'object null' as it is null."}
+{"level":"error","message":"Cannot destructure property 'nombre' of 'object null' as it is null."}
+{"level":"error","message":"Cannot destructure property 'nombre' of 'object null' as it is null."}
+{"level":"error","message":"Cannot destructure property 'nombre' of 'object null' as it is null."}
