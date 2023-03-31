@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import { asDto } from "../../dtos/ProductDTO.js";
 import { proyectConfig } from "../../../../../utils/configs/config.js";
 const DB_URL = proyectConfig.URL_MONGO_ATLAS;
 import logger from "../../../../../utils/logger.js";
@@ -15,23 +15,24 @@ export default class ProductsDaoMongo {
   }
 
   async create(data) {
-    let newElem = await this.collection.create(data);
-    return newElem._id;
+    await this.collection.create(data);
+    return true;
   }
 
   async getById(id) {
     if (mongoose.Types.ObjectId.isValid(id)) {
-      return await this.collection.findOne({ _id: id });
+      return asDto(await this.collection.findOne({ _id: id }));
     } else {
       return null;
     }
   }
 
   async getBySearch(filter) {
-    return await this.collection.find(filter).lean();
+    return asDto(await this.collection.find(filter).lean());
   }
+
   async getAll() {
-    return await this.collection.find().lean();
+    return asDto(await this.collection.find().lean());
   }
 
   async modify(id, data) {
@@ -44,8 +45,14 @@ export default class ProductsDaoMongo {
     }
   }
 
-  async delete(id) {}
+  async delete(id) {
+    let res = await this.collection.deleteOne({ _id: id });
+    if (res.deletedCount == 0) return false;
+    return true;
+  }
+
   async deleteAll() {
     await this.collection.deleteMany({});
+    return true;
   }
 }
